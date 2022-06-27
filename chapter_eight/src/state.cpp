@@ -20,8 +20,11 @@ State::~State() {
 	std::cout << "deconstruct called\n";
 }
 
-void State::printGrid(std::vector<std::vector<int> > state)
+void State::printGrid()
 {
+	std::vector<std::vector<int> > state;
+
+	state = _initialState;
 	for (size_t i = 0; i < 3; ++i)
 	{
 		for (size_t j = 0; j < state[i].size(); ++j)
@@ -30,24 +33,17 @@ void State::printGrid(std::vector<std::vector<int> > state)
 	}
 }
 
-int main(int argc, char **argv)
+vector<vector<int>> State::getGrid(string input)
 {
-	State state;
-	std::string line;
-	vector< vector<int> > initialState;
-	vector< vector<int> > goalState;
 	vector<int> row;
+	std::string line;
+	vector< vector<int> > grid;
 
-	if (argc != 2)
-	{
-		cout << "invalid argument\n";
-		return 1;
-	}
-	std::ifstream file(argv[1]);
+	std::ifstream file(input);
 	if (!file)
 	{
 		cout << "invalid file\n";
-		return 2;
+		exit(1);
 	}
 	while (getline(file, line))
 	{
@@ -56,8 +52,32 @@ int main(int argc, char **argv)
 		{
 			row.push_back((int)line[i] - '0');
 		}
-		initialState.push_back(row);
+		grid.push_back(row);
 		row.clear();
 	}
-	state.printGrid(initialState);
+	return grid;
+}
+
+void State::getInitialState(string input)
+{
+	_initialState = getGrid(input);
+}
+
+void State::getGoalState(string input)
+{
+	_goalState = getGrid(input);
+}
+
+int main(int argc, char **argv)
+{
+	State state;
+
+	if (argc != 2)
+	{
+		cout << "invalid argument\n";
+		return 1;
+	}
+	state.getInitialState(argv[1]);
+	state.getGoalState("goal_map1");
+	state.printGrid();
 }

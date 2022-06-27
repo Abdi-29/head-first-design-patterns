@@ -26,11 +26,16 @@ public:
 	State();
 	~State();
 
-	void printGrid(std::vector< std::vector<int> > state);
+	void printGrid();
+	void getInitialState(string input);
+	void getGoalState(string input);
+	vector< vector<int> > getGrid(string input);
 private:
 //	int _hScore;
 //	int _gScore;
 //	int _fScore;
+	vector< vector<int> > _initialState;
+	vector< vector<int> > _goalState;
 };
 
 #endif
