@@ -13,10 +13,10 @@ CFLAGS = -Wall -Werror -Wextra -std=c++11
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	c++ $(OBJ) -o $(NAME)
+	clang++ $(OBJ) -o $(NAME)
 
 %.o: %.cpp
-	c++ -c  $(INCLUDE) $(CFLAGS) $< -o $@
+	clang++ -c  $(INCLUDE) $(CFLAGS) $< -o $@
 
 clean:
 	rm -f $(OBJ)
